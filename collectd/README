@@ -1,0 +1,10 @@
+# we use debootstrap to create a fresh build environment, chroot inside and install fpm
+debootstrap --verbose --include=build-essential,pkg-config,liboping-dev,libcurl4-openssl-dev,libxml2-dev,libmysqlclient-dev,rubygems,ruby-dev,git squeeze /var/tmp/debian ftp://ftp.lug.ro/debian
+chroot /var/tmp/debian
+gem install fpm
+
+# clone this project inside your chroot and build collectd
+cd /usr/src
+git clone https://github.com/ngmlabs/fpm-build.git
+fpm-build/collectd/build.sh
+
